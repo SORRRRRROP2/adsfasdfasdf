@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Ein kleines Abenteuer</title>
+  <title>Eine Nachricht für dich</title>
   <style>
     :root { color-scheme: dark; font-family: Arial, Helvetica, sans-serif; }
     * { box-sizing: border-box; }
@@ -11,9 +11,10 @@
     button { font: inherit; }
     .page { display: none; min-height: 100vh; position: relative; overflow: hidden; padding: 28px 22px 100px; }
     .page.active { display: flex; flex-direction: column; }
-    .page-one { background: radial-gradient(ellipse at 50% 35%, #57377c 0%, #2c1b48 52%, #171022 100%); }
+    .page-one { background: #050407; }
     .page-two { background: radial-gradient(ellipse at 50% 25%, #704b91 0%, #3b2757 48%, #1b1427 100%); }
-    .page-three { background: #261b30; align-items: center; justify-content: center; }
+    .page-three { background: radial-gradient(ellipse at center, #382746, #17111e 75%); align-items: center; justify-content: center; }
+    .page-four { background: #fff; color: #171717; align-items: center; justify-content: center; text-align: center; }
     .stars { position: absolute; inset: 0; pointer-events: none; opacity: .8; }
     .heart { position: absolute; color: #f0a8ff; text-shadow: 0 0 16px #f0a8ff; animation: float 5s ease-in-out infinite; }
     .heart:nth-child(1) { top: 13%; left: 12%; font-size: 30px; }
@@ -28,19 +29,19 @@
     .prompt { color: #f3c8ff; margin-top: 16px !important; }
     .page-two .game-box { margin-top: auto; margin-bottom: 5vh; }
     .mood { text-align: center; z-index: 1; margin: 10px auto 0; font-size: clamp(2rem, 7vw, 3.5rem); letter-spacing: .25em; }
-    .nav { position: absolute; z-index: 3; left: 0; right: 0; bottom: 22px; display: flex; align-items: center; justify-content: center; gap: 16px; }
+    .apology-card { width: min(760px, 92vw); padding: clamp(28px, 7vw, 66px); text-align: center; position: relative; color: #392b36; background: radial-gradient(ellipse at center, #fff8e9 0%, #e8d9b8 72%, #d0bd93 100%); border: 2px solid #c5a970; box-shadow: 0 0 0 8px #3a2a3e, 0 0 0 10px #b99461, 0 22px 55px #100a14; }
+    .apology-card::before, .apology-card::after { content: "✦  ❧  ✦"; position: absolute; left: 12px; right: 12px; color: #8c704a; font-size: 19px; letter-spacing: .45em; }
+    .apology-card::before { top: 12px; }
+    .apology-card::after { bottom: 12px; }
+    .apology-card h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2rem, 7vw, 4rem); margin: 12px 0 24px; font-weight: 500; }
+    .apology-card p { max-width: 580px; margin: 0 auto; font-family: Georgia, serif; font-size: clamp(1.05rem, 2.5vw, 1.3rem); line-height: 1.8; }
+    .last-message { width: min(760px, 90vw); font-size: clamp(1.2rem, 3vw, 1.8rem); line-height: 1.7; }
+    .nav { position: fixed; z-index: 3; left: 0; right: 0; bottom: 22px; display: flex; align-items: center; justify-content: center; gap: 16px; }
     .nav button { border: 1px solid #e9caff; background: #3c2854; color: white; border-radius: 999px; padding: 11px 20px; cursor: pointer; box-shadow: 0 4px 16px #120b1d; }
     .nav button:hover { background: #68458a; }
     .nav .counter { min-width: 62px; text-align: center; color: #e4d3ee; }
-    .ornate-card { width: min(720px, 92vw); padding: clamp(28px, 7vw, 66px); text-align: center; position: relative; color: #392b36; background: radial-gradient(ellipse at center, #fff8e9 0%, #e8d9b8 72%, #d0bd93 100%); border: 2px solid #c5a970; box-shadow: 0 0 0 8px #3a2a3e, 0 0 0 10px #b99461, 0 22px 55px #100a14; }
-    .ornate-card::before, .ornate-card::after { content: "✦  ❧  ✦"; position: absolute; left: 12px; right: 12px; color: #8c704a; font-size: 19px; letter-spacing: .45em; }
-    .ornate-card::before { top: 12px; }
-    .ornate-card::after { bottom: 12px; }
-    .eyebrow { font-family: Georgia, serif; text-transform: uppercase; letter-spacing: .28em; font-size: .82rem; color: #806544; }
-    .ornate-card h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2rem, 7vw, 4.2rem); margin: 20px 0; font-weight: 500; }
-    .ornate-card .rule { width: 58%; border-top: 1px solid #9a7a4c; border-bottom: 1px solid #9a7a4c; height: 7px; margin: 20px auto; }
-    .ornate-card p { max-width: 520px; margin: 0 auto; font-family: Georgia, serif; font-size: clamp(1.05rem, 2.5vw, 1.3rem); line-height: 1.8; }
-    .page-three .nav { position: fixed; }
+    body.on-white .nav button { background: #fff; color: #2b2034; border-color: #8a6ca0; box-shadow: 0 3px 12px #aaa; }
+    body.on-white .nav .counter { color: #333; }
     @media (max-height: 650px) { .page-title { margin-top: 2vh; } .game-box { margin-bottom: 2vh; } }
   </style>
 </head>
@@ -48,42 +49,37 @@
   <main>
     <section class="page page-one active" aria-label="Seite 1">
       <div class="stars" aria-hidden="true"><span class="heart">♥</span><span class="heart">♡</span><span class="heart">♥</span><span class="heart">♡</span></div>
-      <h1 class="page-title">Ein kleines Abenteuer</h1>
-      <p class="subtitle">Ein bisschen Magie wartet auf dich …</p>
+      <h1 class="page-title">Entschuldigung</h1>
+      <p class="subtitle">Ich war überfordert.</p>
       <div class="game-box">
-        <p>Der Abend leuchtet in sanftem Violett. Kleine Herzen tanzen durch die Luft, und irgendwo funkelt ein geheimnisvoller Weg.</p>
-        <p>Du machst einen Schritt nach vorn. Was wird wohl hinter dem Licht verborgen sein?</p>
-        <p class="prompt">♡ Drücke „Weiter“, um dein Abenteuer fortzusetzen.</p>
+        <p>Dieser Text ist für mich, und ich hoffe, er wird dir gefallen. 😁</p>
       </div>
     </section>
 
     <section class="page page-two" aria-label="Seite 2">
       <div class="stars" aria-hidden="true"><span class="heart">♡</span><span class="heart">♥</span><span class="heart">♡</span><span class="heart">♥</span></div>
-      <h1 class="page-title">Ein stiller Moment</h1>
-      <p class="subtitle">Manchmal ist es okay, traurig zu sein.</p>
+      <h1 class="page-title">Ich liebe dich noch immer</h1>
       <div class="mood" aria-label="traurige Emojis">🥺 😢 💜</div>
       <div class="game-box">
-        <p>Der Regen klopft leise ans Fenster, während du an jemanden denkst, der dir fehlt.</p>
-        <p>Auch wenn dein Herz gerade schwer ist: Du musst da nicht allein durch. Morgen kann sich schon ein kleines bisschen heller anfühlen.</p>
-        <p class="prompt">☾ Atme tief durch. Du bist wichtig.</p>
+        <p>Meine Mutter war sehr böse auf mich, weil ich mit dir sehr pervers gesprochen habe. Ich hatte zum ersten Mal ein ähnliches Gespräch mit meinem Vater, und ich wollte einfach, dass alles wieder wie früher wäre.</p>
       </div>
     </section>
 
     <section class="page page-three" aria-label="Seite 3">
-      <article class="ornate-card">
-        <div class="eyebrow">Eine Nachricht für dich</div>
-        <h1>Für immer in Erinnerung</h1>
-        <div class="rule"></div>
-        <p>Manche Menschen hinterlassen Spuren, die selbst die Zeit nicht verblassen lässt. Bewahre die schönen Augenblicke nah bei dir — sie gehören für immer zu deiner Geschichte.</p>
-        <div class="rule"></div>
-        <div class="eyebrow">Mit ganz viel Herz</div>
+      <article class="apology-card">
+        <h1>Wieder Entschuldigung, aber …</h1>
+        <p>Ich hoffe, du liebst mich noch (obwohl ich das Gefühl habe, dass meine Chance vielleicht nur bei 5–10 % liegt) und dass unsere Geschichte noch nicht zu Ende ist.</p>
       </article>
+    </section>
+
+    <section class="page page-four" aria-label="Seite 4">
+      <div class="last-message">Höchstwahrscheinlich hat Lejla sie schon alle verpetzt, aber ja.</div>
     </section>
   </main>
 
   <nav class="nav" aria-label="Seitennavigation">
     <button id="back" type="button">← Zurück</button>
-    <span class="counter" id="counter">1 / 3</span>
+    <span class="counter" id="counter">1 / 4</span>
     <button id="next" type="button">Weiter →</button>
   </nav>
 
@@ -95,7 +91,7 @@
       current = (index + pages.length) % pages.length;
       pages.forEach((page, i) => page.classList.toggle('active', i === current));
       counter.textContent = `${current + 1} / ${pages.length}`;
-      document.getElementById('back').disabled = false;
+      document.body.classList.toggle('on-white', current === 3);
       document.getElementById('next').textContent = current === pages.length - 1 ? 'Заново ↻' : 'Weiter →';
     }
     document.getElementById('back').addEventListener('click', () => showPage(current - 1));
