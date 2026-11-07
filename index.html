@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Mini Site</title>
+    <style>
+      :root {
+        --bg: #222327;
+        --panel: #272a2d;
+        --text: #f4f4f4;
+        --muted: #d7d7d7;
+        --line: rgba(255,255,255,0.18);
+        --red: #ff4d4d;
+        --blue: #5aa7ff;
+        --paper: #e0d2a8;
+        --paper-shadow: rgba(0,0,0,0.35);
+      }
+
+      * { box-sizing: border-box; }
+
+      body {
+        margin: 0;
+        font-family: Arial, Helvetica, sans-serif;
+        background: var(--bg);
+        color: var(--text);
+        min-height: 100vh;
+        display: flex;
+        justify-content: center;
+        padding: 28px 18px 48px;
+      }
+
+      .wrap {
+        width: min(100%, 1100px);
+      }
+
+      .page {
+        margin-bottom: 30px;
+      }
+
+      h2 {
+        margin: 0 0 10px;
+        font-weight: 700;
+        font-size: clamp(1.2rem, 1.3vw + 0.7rem, 2rem);
+        line-height: 1.2;
+      }
+
+      p {
+        margin: 0 0 12px;
+        font-size: clamp(1.05rem, 1vw + 0.7rem, 2.1rem);
+        line-height: 1.5;
+        letter-spacing: 0.1px;
+      }
+
+      .mark-red {
+        color: var(--red);
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+      }
+
+      .mark-blue {
+        color: var(--blue);
+        text-decoration: underline;
+        text-decoration-style: dotted;
+        text-decoration-thickness: 2px;
+        text-underline-offset: 4px;
+      }
+
+      .paper-wrap {
+        display: flex;
+        justify-content: flex-start;
+        margin-top: 10px;
+      }
+
+      .paper {
+        position: relative;
+        width: 320px;
+        height: 280px;
+        background: linear-gradient(180deg, #f2ebd5 0%, #dfd1a8 100%);
+        border: 1px solid rgba(110, 80, 45, 0.7);
+        box-shadow: 0 8px 14px var(--paper-shadow);
+        padding: 14px 18px;
+        color: #2f250f;
+        overflow: hidden;
+      }
+
+      .paper::before {
+        content: "";
+        position: absolute;
+        inset: 0;
+        background: repeating-linear-gradient(
+          to bottom,
+          rgba(74, 55, 25, 0.05),
+          rgba(74, 55, 25, 0.05) 1px,
+          transparent 1px,
+          transparent 3px
+        );
+      }
+
+      .paper::after {
+        content: "";
+        position: absolute;
+        inset: 10px;
+        border: 1px solid rgba(111, 74, 30, 0.35);
+      }
+
+      .paper-inner {
+        position: relative;
+        z-index: 1;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        text-align: center;
+      }
+
+      .paper-header {
+        font-size: 22px;
+        font-weight: bold;
+        letter-spacing: 0.06em;
+        font-family: Georgia, 'Times New Roman', serif;
+        text-transform: uppercase;
+        line-height: 1.1;
+        margin-bottom: 8px;
+      }
+
+      .paper-sub {
+        font-size: 11px;
+        letter-spacing: 0.11em;
+        text-transform: uppercase;
+        opacity: 0.8;
+      }
+
+      .paper-lines {
+        width: 82%;
+        margin-top: 10px;
+        border-top: 2px solid rgba(70, 46, 17, 0.35);
+        border-bottom: 2px solid rgba(70, 46, 17, 0.35);
+        padding-top: 8px;
+        padding-bottom: 8px;
+        font-size: 12px;
+        line-height: 1.5;
+      }
+
+      .paper-lines div {
+        margin: 4px 0;
+      }
+
+      .final-text {
+        margin-top: 24px;
+      }
+
+      @media (max-width: 700px) {
+        .wrap {
+          width: min(100%, 760px);
+        }
+
+        .paper {
+          width: 220px;
+          height: 220px;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <div class="page">
+        <h2>Seite 1:</h2>
+        <p>Es muss eine mehr Lila violett gestaltung mit ein paar Herzen sein.</p>
+      </div>
+
+      <div class="page">
+        <h2>Seite 2:</h2>
+        <p>
+          Ähnlicher Stille aber der Text befindet sich in eine Kästchen unten wie in Video Spiele und dort
+          auch <span class="mark-blue">bitte2-3 random Sätze</span> einfach zu schauen.
+        </p>
+        <p>Und bitte ein paar sad or crying emojis.</p>
+      </div>
+
+      <div class="page">
+        <h2>Seite 3:</h2>
+        <div class="paper-wrap">
+          <div class="paper" aria-label="Alte Zeitung">
+            <div class="paper-inner">
+              <div class="paper-header">P e r<small>t</small> o n</div>
+              <div class="paper-sub">The Journal</div>
+              <div class="paper-lines">
+                <div>Wochenspiegel</div>
+                <div>Ausgabe 2026</div>
+                <div>Mit Liebe und Erinnerung</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <p class="final-text">Der Text wird jetzt in der Mitte sein und hat so eine Umrandung wie auf dem Beispiel.</p>
+    </div>
+  </body>
+</html>
