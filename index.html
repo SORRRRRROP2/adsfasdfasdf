@@ -5,44 +5,116 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Eine Nachricht für dich</title>
   <style>
-    :root { color-scheme: dark; font-family: Arial, Helvetica, sans-serif; }
+    :root {
+      color-scheme: dark;
+      font-family: 'Segoe UI', Arial, sans-serif;
+      --rose: #ffd2e7;
+      --pink: #f5a9cf;
+      --lavender: #e8c7ff;
+      --ink: #271627;
+    }
     * { box-sizing: border-box; }
-    body { margin: 0; min-height: 100vh; background: #100d18; color: #fff; }
+    body { margin: 0; min-height: 100vh; color: #fffafc; background: #160e1a; }
     button { font: inherit; }
-    .page { display: none; min-height: 100vh; position: relative; overflow: hidden; padding: 28px 22px 100px; }
-    .page.active { display: flex; flex-direction: column; }
-    .page-one { background: radial-gradient(ellipse at 50% 35%, #57377c 0%, #2c1b48 52%, #171022 100%); }
-    .page-two { background: radial-gradient(ellipse at 50% 25%, #704b91 0%, #3b2757 48%, #1b1427 100%); }
-    .page-three { background: radial-gradient(ellipse at center, #382746, #17111e 75%); align-items: center; justify-content: center; }
-    .page-four { background: #fff; color: #171717; align-items: center; justify-content: center; text-align: center; }
-    .stars { position: absolute; inset: 0; pointer-events: none; opacity: .8; }
-    .heart { position: absolute; color: #f0a8ff; text-shadow: 0 0 16px #f0a8ff; animation: float 5s ease-in-out infinite; }
+    .page {
+      display: none;
+      min-height: 100vh;
+      position: relative;
+      overflow: hidden;
+      padding: 32px 22px 110px;
+      isolation: isolate;
+    }
+    .page.active { display: flex; flex-direction: column; animation: appear .7s ease both; }
+    @keyframes appear { from { opacity: 0; } to { opacity: 1; } }
+    .page::before {
+      content: "";
+      position: absolute;
+      inset: 14px;
+      border: 1px solid rgba(255, 220, 239, .27);
+      border-radius: 22px;
+      pointer-events: none;
+      z-index: -1;
+    }
+    .page-one { background: radial-gradient(ellipse at 50% 18%, #82517f 0%, #482b55 43%, #211426 100%); }
+    .page-two { background: radial-gradient(ellipse at 50% 15%, #795276 0%, #482c54 45%, #201426 100%); }
+    .page-three { background: radial-gradient(ellipse at center, #604259 0%, #302036 58%, #17101c 100%); align-items: center; justify-content: center; }
+    .page-four { background: radial-gradient(ellipse at center, #fff8f1 0%, #f8e4ed 62%, #edcfdf 100%); color: var(--ink); align-items: center; justify-content: center; text-align: center; }
+    .stars { position: absolute; inset: 0; pointer-events: none; opacity: .9; z-index: -1; }
+    .heart { position: absolute; color: #ffd2e7; text-shadow: 0 0 16px #f4a8d1, 0 0 32px rgba(245, 169, 207, .55); animation: float 5s ease-in-out infinite; }
     .heart:nth-child(1) { top: 13%; left: 12%; font-size: 30px; }
     .heart:nth-child(2) { top: 21%; right: 15%; font-size: 22px; animation-delay: 1s; }
     .heart:nth-child(3) { bottom: 25%; left: 20%; font-size: 20px; animation-delay: 2s; }
     .heart:nth-child(4) { bottom: 32%; right: 12%; font-size: 34px; animation-delay: .5s; }
     @keyframes float { 50% { transform: translateY(-13px) rotate(8deg); } }
-    .page-title { z-index: 1; text-align: center; margin: 7vh auto 0; color: #ffe5ff; font-size: clamp(2rem, 6vw, 4rem); text-shadow: 0 3px 0 #9c62c4, 0 0 24px #dca2ff; }
-    .subtitle { z-index: 1; text-align: center; color: #e7d4f4; font-size: 1.05rem; margin: 12px auto 0; }
-    .game-box { z-index: 1; width: min(680px, 92vw); margin: auto auto 7vh; padding: 25px 28px; min-height: 150px; border: 3px solid #e4c5ff; border-radius: 12px; background: rgba(25, 16, 39, .92); box-shadow: 0 0 0 5px rgba(183, 123, 221, .28), 0 14px 45px #100a1d; font-size: clamp(1.05rem, 2.4vw, 1.35rem); line-height: 1.65; }
+    .page-title {
+      z-index: 1;
+      text-align: center;
+      margin: 7vh auto 0;
+      color: #fff0f8;
+      font-family: 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+      font-weight: 500;
+      letter-spacing: .035em;
+      font-size: clamp(2.2rem, 6vw, 4.2rem);
+      text-shadow: 0 2px 0 #b16b9a, 0 0 25px rgba(255, 185, 222, .58);
+    }
+    .subtitle { z-index: 1; text-align: center; color: #ffe2f0; font-family: Georgia, serif; font-style: italic; font-size: clamp(1.05rem, 2.5vw, 1.3rem); margin: 14px auto 0; }
+    .game-box {
+      z-index: 1;
+      width: min(680px, 92vw);
+      margin: auto auto 7vh;
+      padding: 27px 30px;
+      min-height: 150px;
+      border: 1px solid rgba(255, 221, 240, .82);
+      border-radius: 22px;
+      background: linear-gradient(145deg, rgba(52, 29, 57, .88), rgba(39, 23, 45, .94));
+      box-shadow: 0 0 0 5px rgba(240, 171, 209, .12), 0 16px 48px rgba(12, 5, 16, .4), inset 0 0 24px rgba(255, 218, 237, .06);
+      font-family: Georgia, serif;
+      font-size: clamp(1.08rem, 2.4vw, 1.35rem);
+      line-height: 1.75;
+    }
     .game-box p { margin: 0 0 8px; }
-    .prompt { color: #f3c8ff; margin-top: 16px !important; }
+    .game-box::before { content: "♡"; display: block; color: var(--rose); text-align: center; font-size: 1.35rem; margin: -8px 0 8px; }
     .page-two .game-box { margin-top: auto; margin-bottom: 5vh; }
-    .mood { text-align: center; z-index: 1; margin: 10px auto 0; font-size: clamp(2rem, 7vw, 3.5rem); letter-spacing: .25em; }
-    .apology-card { width: min(760px, 92vw); padding: clamp(28px, 7vw, 66px); text-align: center; position: relative; color: #392b36; background: radial-gradient(ellipse at center, #fff8e9 0%, #e8d9b8 72%, #d0bd93 100%); border: 2px solid #c5a970; box-shadow: 0 0 0 8px #3a2a3e, 0 0 0 10px #b99461, 0 22px 55px #100a14; }
-    .apology-card::before, .apology-card::after { content: "✦  ❧  ✦"; position: absolute; left: 12px; right: 12px; color: #8c704a; font-size: 19px; letter-spacing: .45em; }
-    .apology-card::before { top: 12px; }
-    .apology-card::after { bottom: 12px; }
-    .apology-card h1 { font-family: Georgia, 'Times New Roman', serif; font-size: clamp(2rem, 7vw, 4rem); margin: 12px 0 24px; font-weight: 500; }
-    .apology-card p { max-width: 580px; margin: 0 auto; font-family: Georgia, serif; font-size: clamp(1.05rem, 2.5vw, 1.3rem); line-height: 1.8; }
-    .last-message { width: min(760px, 90vw); font-size: clamp(1.2rem, 3vw, 1.8rem); line-height: 1.7; }
+    .mood { text-align: center; z-index: 1; margin: 10px auto 0; font-size: clamp(2rem, 7vw, 3.5rem); letter-spacing: .25em; filter: drop-shadow(0 3px 8px rgba(255, 197, 226, .4)); }
+    .apology-card {
+      width: min(760px, 92vw);
+      padding: clamp(42px, 8vw, 78px) clamp(28px, 7vw, 66px);
+      text-align: center;
+      position: relative;
+      color: #49313f;
+      background: radial-gradient(ellipse at center, #fffaf1 0%, #f4e3d3 74%, #e8cfb9 100%);
+      border: 1px solid #d5b48c;
+      border-radius: 5px;
+      box-shadow: 0 0 0 7px #3a283a, 0 0 0 9px #c79b75, 0 22px 55px rgba(10, 5, 12, .5);
+    }
+    .apology-card::before, .apology-card::after { content: "♡  ✦  ❧  ✦  ♡"; position: absolute; left: 12px; right: 12px; color: #a37b68; font-size: 18px; letter-spacing: .35em; }
+    .apology-card::before { top: 13px; }
+    .apology-card::after { bottom: 13px; }
+    .apology-card h1 { font-family: 'Palatino Linotype', 'Book Antiqua', Georgia, serif; font-size: clamp(2rem, 7vw, 4rem); margin: 12px 0 24px; font-weight: 500; color: #633d56; }
+    .apology-card p { max-width: 580px; margin: 0 auto; font-family: Georgia, serif; font-size: clamp(1.08rem, 2.5vw, 1.35rem); line-height: 1.9; }
+    .last-message {
+      width: min(760px, 90vw);
+      padding: clamp(35px, 8vw, 70px);
+      border: 1px solid rgba(163, 106, 136, .55);
+      outline: 1px solid rgba(163, 106, 136, .25);
+      outline-offset: 8px;
+      border-radius: 50% / 18%;
+      background: rgba(255, 255, 255, .38);
+      box-shadow: 0 15px 50px rgba(112, 62, 89, .14);
+      font-family: 'Palatino Linotype', 'Book Antiqua', Georgia, serif;
+      font-size: clamp(1.25rem, 3vw, 1.9rem);
+      line-height: 1.8;
+      color: #56394a;
+    }
+    .last-message::before { content: "♡"; display: block; color: #bd7197; font-size: 2rem; margin-bottom: 18px; }
     .nav { position: fixed; z-index: 3; left: 0; right: 0; bottom: 22px; display: flex; align-items: center; justify-content: center; gap: 16px; }
-    .nav button { border: 1px solid #e9caff; background: #3c2854; color: white; border-radius: 999px; padding: 11px 20px; cursor: pointer; box-shadow: 0 4px 16px #120b1d; }
-    .nav button:hover { background: #68458a; }
-    .nav .counter { min-width: 62px; text-align: center; color: #e4d3ee; }
-    body.on-white .nav button { background: #fff; color: #2b2034; border-color: #8a6ca0; box-shadow: 0 3px 12px #aaa; }
-    body.on-white .nav .counter { color: #333; }
+    .nav button { border: 1px solid rgba(255, 222, 240, .8); background: linear-gradient(145deg, #865578, #60405f); color: white; border-radius: 999px; padding: 12px 22px; cursor: pointer; box-shadow: 0 5px 18px rgba(15, 7, 18, .35); transition: transform .2s, filter .2s; }
+    .nav button:hover { transform: translateY(-2px); filter: brightness(1.15); }
+    .nav .counter { min-width: 62px; text-align: center; color: #ffe7f3; font-family: Georgia, serif; }
+    body.on-white .nav button { background: linear-gradient(145deg, #fff, #f3dfe9); color: #56394a; border-color: #c99bb2; box-shadow: 0 4px 14px rgba(112, 62, 89, .2); }
+    body.on-white .nav .counter { color: #56394a; }
     @media (max-height: 650px) { .page-title { margin-top: 2vh; } .game-box { margin-bottom: 2vh; } }
+    @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation-duration: .01ms !important; transition-duration: .01ms !important; } }
   </style>
 </head>
 <body>
