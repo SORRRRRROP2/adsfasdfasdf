@@ -18,6 +18,8 @@
     .page-three { background:radial-gradient(ellipse at center, #604259 0%, #302036 58%, #17101c 100%); align-items:center; justify-content:center; }
     .page-four { background:radial-gradient(ellipse at 50% 18%, #795276 0%, #482c54 45%, #201426 100%); }
     .page-five { background:radial-gradient(ellipse at center, #fff8f1 0%, #f8e4ed 62%, #edcfdf 100%); color:var(--ink); align-items:center; justify-content:center; text-align:center; }
+    .page-six { background:#fff; color:#222; align-items:center; justify-content:center; text-align:center; }
+    .page-six::before { border-color:transparent; }
     .stars { position:absolute; inset:0; pointer-events:none; opacity:.9; z-index:-1; }
     .heart { position:absolute; color:#ffd2e7; text-shadow:0 0 16px #f4a8d1, 0 0 32px rgba(245,169,207,.55); animation:float 5s ease-in-out infinite; }
     .heart:nth-child(1) { top:13%; left:12%; font-size:30px; }
@@ -41,6 +43,7 @@
     .apology-card p { max-width:580px; margin:0 auto; font-family:Georgia,serif; font-size:clamp(1.08rem,2.5vw,1.35rem); line-height:1.9; }
     .last-message { width:min(760px,90vw); padding:clamp(35px,8vw,70px); border:1px solid rgba(163,106,136,.55); outline:1px solid rgba(163,106,136,.25); outline-offset:8px; border-radius:50% / 18%; background:rgba(255,255,255,.38); box-shadow:0 15px 50px rgba(112,62,89,.14); font-family:'Palatino Linotype','Book Antiqua',Georgia,serif; font-size:clamp(1.25rem,3vw,1.9rem); line-height:1.8; color:#56394a; }
     .last-message::before { content:"♡"; display:block; color:#bd7197; font-size:2rem; margin-bottom:18px; }
+    .final-note { max-width:850px; width:min(90vw,850px); font-family:'Palatino Linotype','Book Antiqua',Georgia,serif; font-size:clamp(1.35rem,3.2vw,2.1rem); line-height:1.7; color:#222; }
     .nav { position:fixed; z-index:3; left:0; right:0; bottom:22px; display:flex; align-items:center; justify-content:center; gap:16px; }
     .nav button { border:1px solid rgba(255,222,240,.8); background:linear-gradient(145deg,#865578,#60405f); color:white; border-radius:999px; padding:12px 22px; cursor:pointer; box-shadow:0 5px 18px rgba(15,7,18,.35); transition:transform .2s, filter .2s; }
     .nav button:hover { transform:translateY(-2px); filter:brightness(1.15); }
@@ -82,10 +85,13 @@
     <section class="page page-five" aria-label="Seite 5">
       <div class="last-message">Höchstwahrscheinlich hat Lejla dir schon alles verpetzt, aber ja.</div>
     </section>
+    <section class="page page-six" aria-label="Seite 6">
+      <div class="final-note">Du kannst antworten wann du willst, oder gar nicht antworten. Es wird dann aber für mich ein Nein sein.</div>
+    </section>
   </main>
   <nav class="nav" aria-label="Seitennavigation">
     <button id="back" type="button">← Zurück</button>
-    <span class="counter" id="counter">1 / 5</span>
+    <span class="counter" id="counter">1 / 6</span>
     <button id="next" type="button">Weiter →</button>
   </nav>
   <script>
@@ -96,7 +102,7 @@
       current = (index + pages.length) % pages.length;
       pages.forEach((page, i) => page.classList.toggle('active', i === current));
       counter.textContent = `${current + 1} / ${pages.length}`;
-      document.body.classList.toggle('on-white', current === 4);
+      document.body.classList.toggle('on-white', current >= 4);
       document.getElementById('next').textContent = current === pages.length - 1 ? 'Заново ↻' : 'Weiter →';
     }
     document.getElementById('back').addEventListener('click', () => showPage(current - 1));
