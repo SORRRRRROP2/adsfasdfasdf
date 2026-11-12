@@ -38,7 +38,8 @@
     .page-one { background: radial-gradient(ellipse at 50% 18%, #82517f 0%, #482b55 43%, #211426 100%); }
     .page-two { background: radial-gradient(ellipse at 50% 15%, #795276 0%, #482c54 45%, #201426 100%); }
     .page-three { background: radial-gradient(ellipse at center, #604259 0%, #302036 58%, #17101c 100%); align-items: center; justify-content: center; }
-    .page-four { background: radial-gradient(ellipse at center, #fff8f1 0%, #f8e4ed 62%, #edcfdf 100%); color: var(--ink); align-items: center; justify-content: center; text-align: center; }
+    .page-four { background: radial-gradient(ellipse at 50% 15%, #795276 0%, #482c54 45%, #201426 100%); }
+    .page-five { background: radial-gradient(ellipse at center, #fff8f1 0%, #f8e4ed 62%, #edcfdf 100%); color: var(--ink); align-items: center; justify-content: center; text-align: center; }
     .stars { position: absolute; inset: 0; pointer-events: none; opacity: .9; z-index: -1; }
     .heart { position: absolute; color: #ffd2e7; text-shadow: 0 0 16px #f4a8d1, 0 0 32px rgba(245, 169, 207, .55); animation: float 5s ease-in-out infinite; }
     .heart:nth-child(1) { top: 13%; left: 12%; font-size: 30px; }
@@ -75,6 +76,8 @@
     .game-box p { margin: 0 0 8px; }
     .game-box::before { content: "♡"; display: block; color: var(--rose); text-align: center; font-size: 1.35rem; margin: -8px 0 8px; }
     .page-two .game-box { margin-top: auto; margin-bottom: 5vh; }
+    .page-four .page-title { margin-top: 5vh; }
+    .page-four .game-box { margin-top: auto; margin-bottom: 5vh; }
     .mood { text-align: center; z-index: 1; margin: 10px auto 0; font-size: clamp(2rem, 7vw, 3.5rem); letter-spacing: .25em; filter: drop-shadow(0 3px 8px rgba(255, 197, 226, .4)); }
     .apology-card {
       width: min(760px, 92vw);
@@ -145,13 +148,23 @@
     </section>
 
     <section class="page page-four" aria-label="Seite 4">
+      <div class="stars" aria-hidden="true"><span class="heart">♡</span><span class="heart">♥</span><span class="heart">♡</span><span class="heart">♥</span></div>
+      <h1 class="page-title">Leider</h1>
+      <div class="game-box">
+        <p>Leider werde ich nicht möglichkeit haben mit dir zu teilen während meine Mutter zuhause ist (weil sie dich hasst).</p>
+        <p>Und ich dachte ich werde zu schafen über dich vergessen weil ich das früher Geschaft habe aber es war schon zu spät. Ich denke über dich jeden Tag und kann nicht vergessen.</p>
+        <p>Ich musste sagen das ich kein Zeit habe mit jemanden zusammen sein habe, aber ich habe niemals gesagt dass ich dich nicht Liebe</p>
+      </div>
+    </section>
+
+    <section class="page page-five" aria-label="Seite 5">
       <div class="last-message">Höchstwahrscheinlich hat Lejla dir schon alle verpetzt, aber ja.</div>
     </section>
   </main>
 
   <nav class="nav" aria-label="Seitennavigation">
     <button id="back" type="button">← Zurück</button>
-    <span class="counter" id="counter">1 / 4</span>
+    <span class="counter" id="counter">1 / 5</span>
     <button id="next" type="button">Weiter →</button>
   </nav>
 
@@ -163,7 +176,7 @@
       current = (index + pages.length) % pages.length;
       pages.forEach((page, i) => page.classList.toggle('active', i === current));
       counter.textContent = `${current + 1} / ${pages.length}`;
-      document.body.classList.toggle('on-white', current === 3);
+      document.body.classList.toggle('on-white', current === 4);
       document.getElementById('next').textContent = current === pages.length - 1 ? 'Заново ↻' : 'Weiter →';
     }
     document.getElementById('back').addEventListener('click', () => showPage(current - 1));
